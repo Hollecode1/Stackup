@@ -1705,18 +1705,21 @@ function acceptRequest(id){
     if(!chatHistory[f.id])chatHistory[f.id]=[];
   }
   // Delete the request doc
-  if(db&&currentUser)db.collection('cs2_requests').doc(currentUser.uid+'_'+id).delete().catch(()=>{});
-  // Write back to sender's social so they also have us as a friend
   if(db&&currentUser){
-    const myEntry={id:currentUser.uid,username:myProfile.username,elo:myProfile.elo,role:myProfile.role,region:myProfile.region};
-    db.collection('cs2_social').doc(id).get().then(snap=>{
-      const data=snap.exists?snap.data():{};
-      const theirFriends=data.friends||[];
-      if(!theirFriends.find(x=>x.id===currentUser.uid)){
-        theirFriends.push(myEntry);
-      }
-      db.collection('cs2_social').doc(id).set({friends:theirFriends},{merge:true}).catch(()=>{});
-    }).catch(()=>{});
+    db.collection('cs2_requests').doc(currentUser.uid+'_'+id).delete().catch(()=>{});
+    // Write acceptor into sender's friends list via transaction
+    const myEntry={id:currentUser.uid,username:myProfile.username,elo:myProfile.elo,role:myProfile.role,region:myProfile.region,langs:myProfile.langs||'EN'};
+    const senderRef=db.collection('cs2_social').doc(id);
+    db.runTransaction(tx=>{
+      return tx.get(senderRef).then(snap=>{
+        const data=snap.exists?snap.data():{};
+        const theirFriends=data.friends||[];
+        if(!theirFriends.find(x=>x.id===currentUser.uid)){
+          theirFriends.push(myEntry);
+        }
+        tx.set(senderRef,{friends:theirFriends},{merge:true});
+      });
+    }).catch(e=>console.error('acceptRequest tx failed:',e));
   }
   renderFriendRequests();renderFriendsList();renderChatContacts();updateBadges();
   saveSocial();
