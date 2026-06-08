@@ -882,7 +882,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
           </div>
           <div class="fsep"></div>
           <button class="fc" id="fc-online" onclick="toggleOnline(this)">🟢 Online only</button>
-          <span class="pcount" id="pcount"></span>
+          <span class="pcount" id="pcount"></span><button class="btn btn-ghost btn-sm" style="margin-left:8px;font-size:11px;padding:3px 10px;" onclick="shuffleBrowse()" title="Shuffle players">↻ Shuffle</button>
         </div>
         <div class="filter-row">
           <span class="filter-key">ELO</span>
@@ -2003,8 +2003,8 @@ function changePassword(){
 function deleteAccount(){
   if(!confirm('Are you absolutely sure? This cannot be undone.'))return;
   if(!confirm('Last chance — delete your Stackup account?'))return;
-  if(db&&currentUser)db.collection('cs2_profiles').doc(currentUser.uid).delete().catch(()=>{});
-  if(auth&&currentUser)currentUser.delete().then(()=>location.reload()).catch(e=>alert(e.message));
+  if(db&&currentUser){const uid=currentUser.uid;db.collection('cs2_profiles').doc(uid).delete().catch(()=>{});db.collection('cs2_social').doc(uid).delete().catch(()=>{});}
+  if(auth&&currentUser){currentUser.delete().then(()=>location.reload()).catch(e=>{if(e.code==='auth/requires-recent-login'){alert('For security, please log out and log back in before deleting your account.');}else{alert(e.message);}});}
   else{alert('Account deleted (demo mode — page will reload)');location.reload();}
 }
 
@@ -2848,9 +2848,15 @@ function setSort(mode, el){
 }
 
 // ── renderPlayers: LFG Now filter + stack badge on cards
+let _browseSeed = Math.random();
+function shuffleBrowse(){ _browseSeed=Math.random(); renderPlayers(); showToast('Players shuffled!'); }
+function seededShuffle(arr,seed){ const a=[...arr]; let s=seed; for(let i=a.length-1;i>0;i--){ s=(s*9301+49297)%233280; const j=Math.floor((s/233280)*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
 function renderPlayers(){
   const myElo = myProfile?.elo??10200;
+  const friendIds = new Set(friends.map(f=>f.id));
   let list = players.filter(p=>{
+    if(p.id===currentUser?.uid) return false;
     if(filters.region!=='all' && p.region!==filters.region) return false;
     if(filters.elo!=='all'    && Math.abs(p.elo-myElo)>parseInt(filters.elo)) return false;
     if(filters.role!=='all'   && p.role!==filters.role) return false;
@@ -2862,6 +2868,8 @@ function renderPlayers(){
   else if(currentSort==='online') list=list.sort((a,b)=>(b.online?1:0)-(a.online?1:0));
   else if(currentSort==='lfgnow') list=list.sort((a,b)=>(b.lfgTs||0)-(a.lfgTs||0));
   else if(currentSort==='rep')    list=list.sort((a,b)=>getRepScore(b.id)-getRepScore(a.id));
+  else list=seededShuffle(list,_browseSeed);
+  list=[...list.filter(p=>!friendIds.has(p.id)),...list.filter(p=>friendIds.has(p.id))];
 
   $('pcount',`${list.length} player${list.length!==1?'s':''}`);
   if(!list.length){
