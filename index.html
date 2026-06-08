@@ -702,6 +702,7 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
       <div class="ob-sub">Your in-game display name. You can change this later.</div>
       <div class="land-ig" style="margin-bottom:0;"><label>Username</label><input id="ob-user" type="text" placeholder="your_in_game_name" onkeydown="if(event.key==='Enter')obNext(0)"></div>
       <button class="btn-primary" onclick="obNext(0)" style="margin-top:12px;">Continue →</button>
+      <div id="ob-err" style="color:#F87171;font-size:12px;margin-top:8px;min-height:18px;"></div>
     </div>
     <!-- 1: role -->
     <div class="ob-step" id="ob1">
