@@ -64,8 +64,8 @@ nav {
   box-shadow: 0 8px 32px rgba(0,0,0,.4);
 }
 .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
-.nav-emblem { width: 28px; height: 28px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
-.nav-emblem img { width: 100%; height: 100%; object-fit: cover; }
+.nav-emblem { width: 28px; height: 28px; flex-shrink: 0; }
+.nav-emblem img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen; filter: brightness(1.1); }
 .nav-wm { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: #fff; letter-spacing: .04em; }
 .nav-wm em { font-style: normal; color: var(--orange); }
 .nav-links { display: flex; align-items: center; gap: 28px; }
@@ -146,11 +146,11 @@ nav {
 .hero-micro { font-size: 12px; color: var(--text-faint); letter-spacing: .05em; }
 
 /* Hero visuals */
-.hero-visuals { display: flex; align-items: center; justify-content: center; gap: 64px; margin-top: 80px; flex-wrap: wrap; }
+.hero-visuals { display: flex; align-items: center; justify-content: center; gap: 96px; margin-top: 96px; flex-wrap: wrap; }
 
 /* Emblem centerpiece */
 .emblem-wrap {
-  position: relative; width: 200px; height: 200px;
+  position: relative; width: 240px; height: 240px;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .emblem-ring {
@@ -169,12 +169,13 @@ nav {
 }
 @keyframes glowp { 0%,100%{opacity:.5;transform:scale(1)} 50%{opacity:1;transform:scale(1.1)} }
 .emblem-img {
-  position: relative; z-index: 2; width: 130px; height: 130px; object-fit: contain;
-  animation: emblemFloat 6s ease-in-out infinite, emblemRotate 24s linear infinite;
-  filter: drop-shadow(0 0 20px rgba(249,115,22,.4)) drop-shadow(0 0 60px rgba(249,115,22,.15));
+  position: relative; z-index: 2; width: 140px; height: 140px; object-fit: contain;
+  mix-blend-mode: screen;
+  animation: emblemSpin 22s linear infinite, emblemFloat 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 24px rgba(249,115,22,.5)) drop-shadow(0 0 60px rgba(249,115,22,.2)) brightness(1.1);
 }
-@keyframes emblemFloat { 0%,100%{transform:translateY(0) rotate(var(--rot,0deg))} 50%{transform:translateY(-10px) rotate(var(--rot,0deg))} }
-@keyframes emblemRotate { from{--rot:0deg} to{--rot:360deg} }
+@keyframes emblemSpin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+@keyframes emblemFloat { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-10px)} }
 
 /* Crosshair — slow rotation */
 .xhair-wrap {
@@ -304,8 +305,8 @@ section { position: relative; z-index: 1; }
 .cta-emblem {
   position: absolute; width: 400px; height: 400px;
   left: 50%; top: 50%; transform: translate(-50%,-50%);
-  opacity: .06; pointer-events: none;
-  animation: emblemRotate 30s linear infinite;
+  opacity: .12; pointer-events: none; mix-blend-mode: screen;
+  animation: emblemSpin 30s linear infinite;
 }
 .cta-inner { text-align: center; position: relative; z-index: 1; }
 .cta-h {
@@ -323,8 +324,8 @@ footer { border-top: 0.5px solid var(--border); padding: 64px 0 44px; }
 .footer-inner { display: flex; align-items: flex-start; justify-content: space-between; gap: 52px; flex-wrap: wrap; }
 .footer-brand { max-width: 210px; }
 .footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; margin-bottom: 14px; }
-.footer-emblem { width: 26px; height: 26px; border-radius: 50%; overflow: hidden; }
-.footer-emblem img { width: 100%; height: 100%; object-fit: cover; }
+.footer-emblem { width: 26px; height: 26px; }
+.footer-emblem img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen; filter: brightness(1.1); }
 .footer-tag { font-size: 13px; color: var(--text-faint); line-height: 1.65; }
 .footer-cols { display: flex; gap: 60px; flex-wrap: wrap; }
 .footer-col h4 { font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 16px; }
@@ -377,31 +378,6 @@ footer { border-top: 0.5px solid var(--border); padding: 64px 0 44px; }
         <div class="emblem-ring"></div>
         <div class="emblem-glow"></div>
         <img class="emblem-img" src="logo.png" alt="Stackup emblem">
-      </div>
-
-      <!-- Crosshair -->
-      <div class="xhair-wrap r d3">
-        <svg class="xhair-rings" width="170" height="170" viewBox="0 0 170 170" fill="none" style="position:absolute;inset:0;">
-          <circle cx="85" cy="85" r="82" stroke="rgba(249,115,22,.12)" stroke-width="0.5"/>
-          <circle cx="85" cy="85" r="60" stroke="rgba(249,115,22,.1)" stroke-width="0.5"/>
-          <circle cx="85" cy="85" r="38" stroke="rgba(249,115,22,.08)" stroke-width="0.5"/>
-          <!-- tick marks -->
-          <line x1="85" y1="3" x2="85" y2="14" stroke="rgba(249,115,22,.3)" stroke-width="1" stroke-linecap="round"/>
-          <line x1="85" y1="156" x2="85" y2="167" stroke="rgba(249,115,22,.3)" stroke-width="1" stroke-linecap="round"/>
-          <line x1="3" y1="85" x2="14" y2="85" stroke="rgba(249,115,22,.3)" stroke-width="1" stroke-linecap="round"/>
-          <line x1="156" y1="85" x2="167" y2="85" stroke="rgba(249,115,22,.3)" stroke-width="1" stroke-linecap="round"/>
-        </svg>
-        <svg class="xhair-svg-inner" width="56" height="56" viewBox="0 0 56 56" fill="none">
-          <line x1="28" y1="4" x2="28" y2="16" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
-          <line x1="28" y1="40" x2="28" y2="52" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
-          <line x1="4" y1="28" x2="16" y2="28" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
-          <line x1="40" y1="28" x2="52" y2="28" stroke="#F97316" stroke-width="2" stroke-linecap="round"/>
-          <circle cx="28" cy="28" r="2.5" fill="#F97316"/>
-          <path d="M16 8 L8 8 L8 16" stroke="#F97316" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"/>
-          <path d="M40 8 L48 8 L48 16" stroke="#F97316" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"/>
-          <path d="M16 48 L8 48 L8 40" stroke="#F97316" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"/>
-          <path d="M40 48 L48 48 L48 40" stroke="#F97316" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity=".35"/>
-        </svg>
       </div>
 
       <!-- Player card -->
