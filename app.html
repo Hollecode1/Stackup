@@ -1353,12 +1353,12 @@ body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(
    FIREBASE CONFIG — paste your values here
 ══════════════════════════════════════════ */
 const FB = {
-  apiKey:           "AIzaSyAK8-zwGZx91Q27AUX3OnGkqgjdBlUDlQQ",
-  authDomain:       "stackup-231ce.firebaseapp.com",
-  projectId:        "stackup-231ce",
-  storageBucket:    "stackup-231ce.firebasestorage.app",
-  messagingSenderId:"938411811289",
-  appId:            "1:938411811289:web:32300e2c499ae1e86cb9c8"
+  apiKey:           "AIzaSyC69IHYfeKoEi5VZVKr2sCOaU_DPAQN278",
+  authDomain:       "stackupapp-a4de3.firebaseapp.com",
+  projectId:        "stackupapp-a4de3",
+  storageBucket:    "stackupapp-a4de3.firebasestorage.app",
+  messagingSenderId:"958228860770",
+  appId:            "1:958228860770:web:f0652b39e3c0f1ad71e63b"
 };
 
 /* ══════════════════════════════════════════
@@ -1468,10 +1468,14 @@ function loadFSPlayers(){
     ).join('');
   }
   db.collection('cs2_profiles').limit(60).get().then(snap=>{
-    players=snap.docs.map(d=>({id:d.id,...d.data()})).filter(p=>p.id!==currentUser?.uid);
+    const fsPlayers=snap.docs.map(d=>({id:d.id,...d.data()})).filter(p=>p.id!==currentUser?.uid);
+    // Always include demo players so browse is never empty
+    const demoIds=new Set(DEMO.map(d=>d.id));
+    players=[...fsPlayers, ...DEMO.filter(d=>!fsPlayers.find(p=>p.username===d.username))];
     playersLoaded=true;
     renderPlayers();
-  }).catch(()=>{playersLoaded=true;renderPlayers();});
+    renderBestMatches();
+  }).catch(()=>{players=[...DEMO];playersLoaded=true;renderPlayers();renderBestMatches();});
 }
 
 /* ══════════════════════════════════════════
@@ -1543,7 +1547,7 @@ function skipToApp(){
   myProfile={username:'Guest',elo:10200,role:'Rifler',region:'EU',langs:'EN',
     kd:1.24,hs:72,wr:55,adr:81,games:312,mvps:287,bio:''};
   players=[...DEMO];
-  applyProfile();showApp();
+  applyProfile();showApp();renderBestMatches();
 }
 
 /* ══════════════════════════════════════════
@@ -3085,6 +3089,7 @@ function showApp(){
   updateBadges(); loadSocial(); listenForRequests(); listenForMessages();
   setPresence(true); maybeShowCookieBanner(); maybeShowTutorial();
   startOnlineCounter();
+  renderBestMatches();
 }
 
 
@@ -3114,7 +3119,7 @@ initChips();
 </div>
 
 <!-- ══ QUICK MESSAGE MODAL ══ -->
-<div id="qmsg-modal-wrap">
+<div id="qmsg-modal-wrap" style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(2px);">
   <div class="qmsg-modal">
     <div class="qmsg-title" id="qmsg-title">Message player</div>
     <div class="qmsg-sub">They'll receive this as a message request.</div>
@@ -3127,7 +3132,7 @@ initChips();
 </div>
 
 <!-- ══ LOG SESSION MODAL ══ -->
-<div id="logsess-modal-wrap">
+<div id="logsess-modal-wrap" style="position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;display:none;align-items:center;justify-content:center;backdrop-filter:blur(2px);">
   <div class="logsess-modal">
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;margin-bottom:4px;">Log a session</div>
     <div style="font-size:13px;color:var(--text-mid);margin-bottom:18px;">Who did you just play with?</div>
