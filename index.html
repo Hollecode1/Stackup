@@ -318,11 +318,11 @@ section { position: relative; z-index: 1; }
 .why-item-sub { font-size: 12px; color: var(--text-mid); line-height: 1.6; }
 .stat-card { background: var(--surface); border: 0.5px solid var(--border); border-radius: 14px; padding: 30px; box-shadow: 0 20px 48px rgba(0,0,0,.45); }
 .stat-head { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 22px; }
-.stat-row { display: flex; align-items: center; justify-content: space-between; padding: 15px 18px; background: rgba(255,255,255,.02); border-radius: 9px; border: 0.5px solid rgba(255,255,255,.05); margin-bottom: 8px; transition: border-color .2s; }
+.stat-row { display: flex; flex-direction: column; gap: 4px; padding: 14px 18px; background: rgba(255,255,255,.02); border-radius: 9px; border: 0.5px solid rgba(255,255,255,.05); margin-bottom: 8px; transition: border-color .2s; }
 .stat-row:hover { border-color: rgba(249,115,22,.14); }
 .stat-row:last-of-type { margin-bottom: 0; }
-.stat-lbl { font-size: 13px; color: var(--text-mid); }
-.stat-val { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; background: linear-gradient(135deg,#F97316,#FCD34D); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.stat-lbl { font-size: 11px; color: var(--text-mid); text-transform: uppercase; letter-spacing: .07em; }
+.stat-val { font-family: 'Barlow Condensed', sans-serif; font-size: 20px; font-weight: 800; background: linear-gradient(135deg,#F97316,#FCD34D); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
 /* ════════ S6: EARLY ACCESS ════════ */
 #early { padding: 128px 0; }
@@ -401,7 +401,7 @@ footer { border-top: 0.5px solid var(--border); padding: 64px 0 44px; }
       <a href="app.html" class="btn-primary">Start Matching</a>
       <a href="#how" class="btn-secondary">How it works</a>
     </div>
-    <p class="hero-micro r d4">No smurfs. No trolls. No randoms.</p>
+    <p class="hero-micro r d4">Fewer randoms. Better matches.</p>
 
     <div class="hero-visuals">
       <!-- Player card -->
@@ -516,7 +516,7 @@ footer { border-top: 0.5px solid var(--border); padding: 64px 0 44px; }
         <div class="stat-card">
           <div class="stat-head">Early access</div>
           <div class="stat-row"><span class="stat-lbl">CS2 regions supported</span><span class="stat-val">EU · NA · APAC</span></div>
-          <div class="stat-row"><span class="stat-lbl">Roles available</span><span class="stat-val">Entry · AWP · Support · IGL · Lurk</span></div>
+          <div class="stat-row"><span class="stat-lbl">Roles available</span><span class="stat-val">Entry · AWP · Support · IGL</span></div>
           <div class="stat-row"><span class="stat-lbl">ELO filter range</span><span class="stat-val">Silver → Global Elite</span></div>
           <div class="stat-row"><span class="stat-lbl">Cost to join</span><span class="stat-val">$0 forever</span></div>
         </div>
