@@ -65,7 +65,7 @@ nav {
 }
 .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
 .nav-emblem { width: 28px; height: 28px; flex-shrink: 0; }
-.nav-emblem img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen; filter: brightness(1.1); }
+.nav-emblem img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen; filter: brightness(1.2) drop-shadow(0 0 6px rgba(249,115,22,.4)); }
 .nav-wm { font-family: 'Barlow Condensed', sans-serif; font-size: 22px; font-weight: 800; color: #fff; letter-spacing: .04em; }
 .nav-wm em { font-style: normal; color: var(--orange); }
 .nav-links { display: flex; align-items: center; gap: 28px; }
@@ -150,7 +150,7 @@ nav {
 
 /* Emblem centerpiece */
 .emblem-wrap {
-  position: relative; width: 240px; height: 240px;
+  position: relative; width: 260px; height: 260px;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .emblem-ring {
@@ -169,12 +169,11 @@ nav {
 }
 @keyframes glowp { 0%,100%{opacity:.5;transform:scale(1)} 50%{opacity:1;transform:scale(1.1)} }
 .emblem-img {
-  position: relative; z-index: 2; width: 140px; height: 140px; object-fit: contain;
+  position: relative; z-index: 2; width: 220px; height: 220px; object-fit: contain;
   mix-blend-mode: screen;
-  animation: emblemSpin 22s linear infinite, emblemFloat 6s ease-in-out infinite;
-  filter: drop-shadow(0 0 24px rgba(249,115,22,.5)) drop-shadow(0 0 60px rgba(249,115,22,.2)) brightness(1.1);
+  animation: emblemFloat 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 32px rgba(249,115,22,.55)) drop-shadow(0 0 80px rgba(249,115,22,.25)) brightness(1.15);
 }
-@keyframes emblemSpin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
 @keyframes emblemFloat { 0%,100%{transform:translateY(0px)} 50%{transform:translateY(-10px)} }
 
 /* Crosshair — slow rotation */
@@ -305,8 +304,8 @@ section { position: relative; z-index: 1; }
 .cta-emblem {
   position: absolute; width: 400px; height: 400px;
   left: 50%; top: 50%; transform: translate(-50%,-50%);
-  opacity: .12; pointer-events: none; mix-blend-mode: screen;
-  animation: emblemSpin 30s linear infinite;
+  opacity: .13; pointer-events: none; mix-blend-mode: screen;
+  filter: brightness(1.2);
 }
 .cta-inner { text-align: center; position: relative; z-index: 1; }
 .cta-h {
@@ -325,7 +324,7 @@ footer { border-top: 0.5px solid var(--border); padding: 64px 0 44px; }
 .footer-brand { max-width: 210px; }
 .footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; margin-bottom: 14px; }
 .footer-emblem { width: 26px; height: 26px; }
-.footer-emblem img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen; filter: brightness(1.1); }
+.footer-emblem img { width: 100%; height: 100%; object-fit: contain; mix-blend-mode: screen; filter: brightness(1.2) drop-shadow(0 0 4px rgba(249,115,22,.3)); }
 .footer-tag { font-size: 13px; color: var(--text-faint); line-height: 1.65; }
 .footer-cols { display: flex; gap: 60px; flex-wrap: wrap; }
 .footer-col h4 { font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 16px; }
@@ -373,9 +372,6 @@ footer { border-top: 0.5px solid var(--border); padding: 64px 0 44px; }
     <div class="hero-visuals">
       <!-- Emblem -->
       <div class="emblem-wrap r d2">
-        <div class="emblem-ring"></div>
-        <div class="emblem-ring"></div>
-        <div class="emblem-ring"></div>
         <div class="emblem-glow"></div>
         <img class="emblem-img" src="logo.png" alt="Stackup emblem">
       </div>
